@@ -1,9 +1,12 @@
-import { useState } from "react";
+import React,{ useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import menuIcon from "../Assets/menuIcon.png";
-import closeIcon from "../Assets/closeIcon.png";
+import menuIcon from "../assets/menuIcon.png";
+import closeIcon from "../assets/closeIcon.png";
 import {menuItems} from "./menuItems";
+import media from '../styles/media'
+
+const tablet = media.tablet;
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -15,7 +18,19 @@ const NavbarContainer = styled.div`
 `;
 
 const MobileView = styled.div`
-  /* display: none; */
+display: none;
+  
+@media (max-width:${tablet}px) {
+  display: block;
+}
+`;
+
+const DesktopView = styled.div`
+display: block;
+  
+@media (max-width:${tablet}px) {
+  display: none;
+}
 `;
 
 const MenuIcon = styled.img`
@@ -75,9 +90,15 @@ const StyledLink = styled(Link)`
 function Nav() {
   const [clicked, setClicked] = useState(false);
 
+  useEffect(() => {
+    console.log(media.tablet)
+  },[])
+
   const handleClick = () => {
     setClicked(!clicked);
   };
+
+
 
   return (
     <NavbarContainer>
@@ -108,24 +129,19 @@ function Nav() {
           )}
         </SideMenu>
 
-        {/* <NavlinksUnlisted>
-          <NavlinksListed>
-            <Link to="/" style={link}>
-              Home
-            </Link>
-          </NavlinksListed>
-          <NavlinksListed>
-            <Link to="/deals" style={link}>
-              Deals
-            </Link>
-          </NavlinksListed>
-          <NavlinksListed>
-            <Link to="/cart" style={link}>
-              Cart
-            </Link>
-          </NavlinksListed>
-        </NavlinksUnlisted> */}
       </MobileView>
+      <DesktopView>
+
+        <NavlinksUnlisted>
+        {menuItems.map((item, index) => (
+                <NavlinksUnlisted>
+                  <NavlinksListed>
+                    <StyledLink to={item.path}>{item.title}</StyledLink>
+                  </NavlinksListed>
+                </NavlinksUnlisted>
+              ))}
+        </NavlinksUnlisted>
+      </DesktopView>
     </NavbarContainer>
   );
 }

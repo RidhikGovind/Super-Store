@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import searchIcon from "../Assets/searchIcon.png";
+import searchIcon from "../assets/searchIcon.png";
 
 const SearchContainer = styled.div`
   background: lightskyblue;
