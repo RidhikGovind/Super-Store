@@ -10,14 +10,14 @@ Tech Stack:
     - React  
     - React-Router  
     - Styled-components  
- 
+
 
 ## Develop in local machine
 
 ### Clone repository
 
 ```
-$ git clone https://github.com/RidhikGovind/Super-Store/tree/phase-1
+
 ```
 
 ### Navigate to directory
@@ -50,3 +50,4 @@ In the URL of the Github repo replace the `github.com` with `githubbox.com`. Jus
 ## License
 
 MIT
+
