@@ -4,9 +4,9 @@ import styled from "styled-components";
 import menuIcon from "../assets/menuIcon.png";
 import closeIcon from "../assets/closeIcon.png";
 import {menuItems} from "./menuItems";
-import media from '../styles/media'
+import {media, theme} from '../styles'
 
-const tablet = media.tablet;
+
 
 const NavbarContainer = styled.div`
   display: flex;
@@ -14,13 +14,13 @@ const NavbarContainer = styled.div`
   align-items: center;
   background: #013d55;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
 `;
 
 const MobileView = styled.div`
 display: none;
   
-@media (max-width:${tablet}px) {
+@media (max-width:${media.tablet}px) {
   display: block;
 }
 `;
@@ -28,21 +28,18 @@ display: none;
 const DesktopView = styled.div`
 display: block;
   
-@media (max-width:${tablet}px) {
+@media (max-width:${media.tablet}px) {
   display: none;
 }
 `;
 
 const MenuIcon = styled.img`
-  width: 15px;
-  height: 15px;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
 `;
 
-const Brand = styled.div`
-  font-weight: bolder;
-  font-size: 1.5rem;
-`;
+
 const NavlinksUnlisted = styled.ul`
   display: flex;
   justify-content: center;
@@ -69,8 +66,8 @@ const Slider = styled.div`
 `;
 
 const CloseIcon = styled.img`
-  width: 15px;
-  height: 15px;
+  width: 1.2rem;
+  height: 1.2rem;
   cursor: pointer;
 `;
 
@@ -80,19 +77,18 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   font-size: 1.5rem;
   margin: 1.6rem 0;
+  transition: props.brand ? '' : ${theme.transition};
 
+  
   &:hover {
     color: whitesmoke;
-    transform: scale(1.1);
+    transform: props.brand ? '' : scale(1.1);
   }
 `;
 
 function Nav() {
   const [clicked, setClicked] = useState(false);
 
-  useEffect(() => {
-    console.log(media.tablet)
-  },[])
 
   const handleClick = () => {
     setClicked(!clicked);
@@ -102,7 +98,7 @@ function Nav() {
 
   return (
     <NavbarContainer>
-      <Brand>Super Store</Brand>
+      <StyledLink to="/" brand>Super Store</StyledLink>
       <MobileView>
         <MenuIcon
           src={clicked ? "" : menuIcon}
