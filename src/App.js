@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const MainContainer = styled.div`
 margin: 0;
 padding: 0;
-
+text-align: center;
 
 `;
 
