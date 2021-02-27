@@ -51,4 +51,3 @@ In the URL of the Github repo replace the `github.com` with `githubbox.com`. Jus
 ## License
 
 MIT
-

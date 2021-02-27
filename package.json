@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Ridhik Govind",
   "description": "A simple clone of an E-commerce store using React",
-  "keywords": ["super-store", "store-clone"],
+  "keywords": ["super-store", "store-clone", "guided projects", "not a tutorial kinda project"],
   "main": "src/index.js",
   "dependencies": {
     "react": "17.0.1",
@@ -24,5 +24,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "license": "MIT"
 }
