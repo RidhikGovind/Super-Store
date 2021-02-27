@@ -45,7 +45,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.  
 
 ## Too lazy ? Here's a little trick !  
-In the URL of the Github repo replace the `github.com` with `githubbox.com`. Just add the word `box` after `github` and thats it. Now go view the project you lazy ! 
+In the URL of the Github repo replace the `github.com` with `githubbox.com`. Just add the word `box` after `github` and thats it. Now go view the project, you lazy ! 
 
 ## License
 
