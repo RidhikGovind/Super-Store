@@ -17,7 +17,7 @@ Tech Stack:
 ### Clone repository
 
 ```
-
+$ git clone https://github.com/RidhikGovind/Super-Store
 ```
 
 ### Navigate to directory
