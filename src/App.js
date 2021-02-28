@@ -1,6 +1,7 @@
 import './styles.css';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Home, Deals, Cart, Nav, SearchBar } from './components';
+import { Nav, SearchBar } from './components';
+import { Home, Deals, Cart } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
 

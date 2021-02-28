@@ -11,6 +11,7 @@ Tech Stack:
     - React-Router  
     - Styled-components  
 
+**Make sure you are on the right branch when cloning the repo - If you need phase-1, select phase-1 and do `git clone <branch-repo-url>`**
 
 ## Develop in local machine
 

@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import menuIcon from '../assets/menuIcon.png';
 import closeIcon from '../assets/closeIcon.png';
-import { menuItems } from './menuItems';
+import { menuItems } from '../utils/menuItems';
 import { media, theme } from '../styles';
 
 const NavbarContainer = styled.div`
