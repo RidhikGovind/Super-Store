@@ -1,7 +1,10 @@
+import React from 'react';
+import MainBody from './../MainBody'
+
 function Home() {
   return (
     <div className="Home">
-      <h1>Home</h1>
+      <MainBody />
     </div>
   );
 }

@@ -5,9 +5,7 @@ import { Home, Deals, Cart } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
 
-const MainContainer = styled.div`
-	text-align: center;
-`;
+const MainContainer = styled.div``;
 
 function App() {
 	return (

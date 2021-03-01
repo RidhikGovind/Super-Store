@@ -1,4 +1,5 @@
 import Nav from './Nav';
 import SearchBar from './SearchBar';
 
-export { Nav, SearchBar };
+
+export { Nav, SearchBar  };
