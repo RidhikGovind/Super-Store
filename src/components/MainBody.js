@@ -21,7 +21,8 @@ const RatingNum = styled.div``
 const Price = styled.div``
 
 const ViewItemBtn = styled.div`
-
+    width: 0.5rem;
+    height: 0.3rem;
 `
 
 
