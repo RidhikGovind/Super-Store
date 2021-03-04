@@ -114,7 +114,7 @@ function Home() {
 										{isOnSale === true ? <OnSale>On Sale</OnSale> : ''}
 									</Price>
 									<Wrapper>
-										<StyledLink to={`/deals`}>View Item</StyledLink>
+										<StyledLink to={`/item/${_id}`}>View Item</StyledLink>
 									</Wrapper>
 								</ProductContainer>
 							)
