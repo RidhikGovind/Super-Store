@@ -123,7 +123,7 @@ function Nav() {
 	};
 	return (
 		<NavbarContainer>
-			<StyledLink to='/' brand>
+			<StyledLink to='/' brand="true">
 				Super Store
 			</StyledLink>
 			<MobileView>
@@ -139,8 +139,8 @@ function Nav() {
 								src={clicked ? closeIcon : ''}
 								onClick={handleClick}
 							></CloseIcon>
-							{menuItems.map((item, index) => (
-								<NavlinksUnlisted>
+							{menuItems.map((item) => (
+								<NavlinksUnlisted key={item.id}>
 									<NavlinksListed>
 										<StyledLink to={item.path}>{item.title}</StyledLink>
 									</NavlinksListed>
@@ -155,8 +155,8 @@ function Nav() {
 
 			<DesktopView>
 				<Navlinknew>
-					{menuItems.map((item, index) => (
-						<NavLink exact to={item.path} activeClassName='current'>
+					{menuItems.map((item) => (
+						<NavLink exact to={item.path} activeClassName='current' key={item.id} >
 							<li>{item.title}</li>
 						</NavLink>
 					))}
