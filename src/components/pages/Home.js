@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
+import { Link, NavLink } from 'react-router-dom';
 
 const MainBody = styled.div``;
 
@@ -22,33 +23,67 @@ const ProductContainer = styled.div`
 	// background: lightpink;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	// justify-content: center;
+	text-align: left;
+	// align-items: center;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	padding: 1rem;
 `;
 
 const Image = styled.img`
 	width: 300px;
 	height: 300px;
-  padding: 1rem;
+	padding: 1rem;
 `;
 
-const Name = styled.div``;
+const Name = styled.div`
+	font-size: 1.2rem;
+	margin: 0.3rem 0.5rem;
+`;
 
 const Rating = styled.div`
 	display: flex;
 	align-content: center;
 	text-align: center;
+	margin: 0.3rem 0.5rem;
 `;
 
 const RatingNum = styled.div`
-	margin-left: 0.3rem;
+	margin: 0.5rem;
+	font-size: 1.1rem;
 `;
 
-const Price = styled.div``;
+const Price = styled.div`
+	margin: 0.3rem 0.5rem;
+	font-size: 1.3rem;
+	font-weight: bold;
+`;
 
-const ViewItemBtn = styled.div`
-	width: 0.5rem;
-	height: 0.3rem;
+const OnSale = styled.span`
+	height: 1rem;
+	width: 2rem;
+	background: #d22b2b;
+	color: white;
+	padding: 0.2rem 0.2rem;
+	margin-left: 0.5rem;
+	border-radius: 3px;
+`;
+
+const Wrapper = styled.div`
+	display: flex;
+	align-content: center;
+	justify-content: center;
+`;
+
+const StyledLink = styled(Link)`
+	background: #ffa200;
+	color: white;
+	font-size: 1.2rem;
+	border: none;
+	cursor: pointer;
+	padding: 0.4rem 0.5rem;
+	border-radius: 5px;
+	margin: 1.5rem 0;
 `;
 
 function Home() {
@@ -74,8 +109,13 @@ function Home() {
 										<Stars rating={avgRating} id={_id}></Stars>
 										<RatingNum>{avgRating}</RatingNum>
 									</Rating>
-									<Price>${price}</Price>
-									<ViewItemBtn></ViewItemBtn>
+									<Price>
+										${price}
+										{isOnSale === true ? <OnSale>On Sale</OnSale> : ''}
+									</Price>
+									<Wrapper>
+										<StyledLink to={`/deals`}>View Item</StyledLink>
+									</Wrapper>
 								</ProductContainer>
 							)
 						)}

@@ -1,7 +1,7 @@
 import './styles.css';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Nav, SearchBar } from './components';
-import { Home, Deals, Cart } from './components/pages';
+import { Home, Deals, Cart, Item } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
 
@@ -23,6 +23,9 @@ function App() {
 					</Router>
 					<Router path='/cart' exact>
 						<Cart />
+					</Router>
+					<Router path='/item/:Itemid' exact>
+						<Item />
 					</Router>
 				</Switch>
 			</Router>
