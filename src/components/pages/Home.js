@@ -71,10 +71,10 @@ function Home() {
 									<Image src={imageUrl}></Image>
 									<Name>{name}</Name>
 									<Rating>
-										<Stars rating={avgRating}></Stars>
+										<Stars rating={avgRating} id={_id}></Stars>
 										<RatingNum>{avgRating}</RatingNum>
 									</Rating>
-									<Price>{price}</Price>
+									<Price>${price}</Price>
 									<ViewItemBtn></ViewItemBtn>
 								</ProductContainer>
 							)
