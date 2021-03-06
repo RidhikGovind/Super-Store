@@ -14,9 +14,9 @@ const Input = styled.input`
 	padding: 0.2rem 0.4rem;
 `;
 const Search = styled.div`
-	background: #f1bc49;
+	background: #ffa200;
 	padding: 0.1rem 0.3rem;
-  border-radius: 0 5px 5px 0;
+	border-radius: 0 5px 5px 0;
 
 	&:hover {
 		background: #f1cc99;
