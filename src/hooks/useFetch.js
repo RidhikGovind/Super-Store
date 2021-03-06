@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react';
 
 const useFetch = (url) => {
 	const [products, setProducts] = useState([]);
+	const [singleProduct, setSingleProduct] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -13,14 +14,15 @@ const useFetch = (url) => {
 				return res.json();
 			})
 			.then((data) => {
-				console.log(data.items);
+				console.log(data);
 
 				setProducts(data.items);
+				setSingleProduct(data)
                 setIsLoading(false)
 			})
 			.catch((err) => console.log('error fetching data', err));
 	},[]);
 
-    return {products, setProducts, isLoading}
+    return {products, setProducts, isLoading, singleProduct}
 };
 export default useFetch;

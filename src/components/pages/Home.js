@@ -1,8 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
 import { Link, NavLink } from 'react-router-dom';
+import { mixins } from '../../styles';
 
 const MainBody = styled.div``;
 
@@ -20,12 +21,9 @@ const Loading = styled.div`
 `;
 
 const ProductContainer = styled.div`
-	// background: lightpink;
 	display: flex;
 	flex-direction: column;
-	// justify-content: center;
 	text-align: left;
-	// align-items: center;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	padding: 1rem;
 `;
@@ -70,25 +68,15 @@ const OnSale = styled.span`
 `;
 
 const Wrapper = styled.div`
-	display: flex;
-	align-content: center;
-	justify-content: center;
+	${mixins.flexCenter};
 `;
 
 const StyledLink = styled(Link)`
-	background: #ffa200;
-	color: white;
-	font-size: 1.2rem;
-	border: none;
-	cursor: pointer;
-	padding: 0.4rem 0.5rem;
-	border-radius: 5px;
-	margin: 1.5rem 0;
+	${mixins.yellowButton};
 `;
 
 function Home() {
-	const url =
-		'https://gp-super-store-api.herokuapp.com/item/list?from=0&size=6&sortDir=asc';
+	
 
 	const URL = 'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc';
 

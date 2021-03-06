@@ -1,5 +1,5 @@
 import './styles.css';
-import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch , Route} from 'react-router-dom';
 import { Nav, SearchBar } from './components';
 import { Home, Deals, Cart, Item } from './components/pages';
 import { GlobalStyle } from './styles';
@@ -15,18 +15,18 @@ function App() {
 				<Nav />
 				<SearchBar />
 				<Switch>
-					<Router path='/' exact>
+					<Route path='/' exact>
 						<Home />
-					</Router>
-					<Router path='/deals' exact>
+					</Route>
+					<Route path='/deals' exact>
 						<Deals />
-					</Router>
-					<Router path='/cart' exact>
+					</Route>
+					<Route path='/cart' exact>
 						<Cart />
-					</Router>
-					<Router path='/item/:itemId' exact>
+					</Route>
+					<Route path='/item/:itemId' exact>
 						<Item />
-					</Router>
+					</Route>
 				</Switch>
 			</Router>
 		</MainContainer>
