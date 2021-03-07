@@ -36,7 +36,7 @@ const Image = styled.img`
 
 const Name = styled.div`
 	font-size: 1.2rem;
-	margin: 0.3rem 0.5rem;
+	margin: 0.3rem 0.5rem; 
 `;
 
 const Rating = styled.div`

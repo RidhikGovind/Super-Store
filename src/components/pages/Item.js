@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
@@ -17,11 +17,9 @@ const ProductContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	text-align: center;
-
 	padding: 1rem;
-	
 	height: 100%;
-
+	\u2611\uFE0F
 	@media (min-width: ${media.netbook}px) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
@@ -54,13 +52,11 @@ const Rating = styled.div`
 	margin: 1rem 0.5rem;
 	padding-bottom: 1rem;
 	border-bottom: 2px solid black;
-
 `;
 
 const RatingNum = styled.div`
 	margin: 0.5rem;
 	font-size: 1.1rem;
-
 `;
 
 const Price = styled.div`
@@ -101,6 +97,18 @@ const StockInput = styled.input`
 	margin: 0.5rem;
 `;
 
+const ErrorMessageBox = styled.span`
+	background: #23d1d6;
+	border-radius: 6px;
+	padding: ${(props) => (props.visible ? '0.3rem 0.4rem' : '0')} @media
+		(max-width: ${media.phablet}px) {
+		display: block;
+	}
+`;
+const StockLeft = styled.div`
+	font-size: 1.1rem;
+	font-weight: bolder;
+`;
 function Item() {
 	const { itemId } = useParams();
 
@@ -117,6 +125,30 @@ function Item() {
 		isOnSale,
 		_id,
 	} = singleProduct;
+
+	const [stock, setStock] = useState(1);
+	const [errorMessage, setErrorMessage] = useState(null);
+
+	useEffect(() => {
+		handleAddToCart();
+	}, [stock]);
+
+	const handleStockChange = ({ target }) => {
+		setStock(target.value);
+	};
+
+	const handleAddToCart = () => {
+		if (stock == 0) {
+			setErrorMessage(`Don't be this cheap. Minimum 1 item is needed`);
+		} else if (stock < 0) {
+			setErrorMessage('How can you be so negative ?');
+		} else if (stock > stockCount) {
+			setErrorMessage(`Aiming pretty high huh ? Not enough products.`);
+		} else {
+			setErrorMessage(null);
+		}
+	};
+
 	return (
 		<>
 			{isLoading ? (
@@ -140,10 +172,19 @@ function Item() {
 							</Price>
 							<Quantity>
 								Quantity:
-								<StockInput type='number' min='1' max={stockCount}></StockInput>
+								<StockInput
+									type='number'
+									min='1'
+									onChange={handleStockChange}
+									max={stockCount}
+								></StockInput>
+								<ErrorMessageBox visible={!errorMessage ? true : false}>
+									{errorMessage}
+								</ErrorMessageBox>
+								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								<StyledLink to={`/item/${_id}`}>Add to Cart</StyledLink>
+								<StyledLink>Add to Cart</StyledLink>
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>
