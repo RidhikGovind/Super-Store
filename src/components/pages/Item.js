@@ -19,8 +19,7 @@ const ProductContainer = styled.div`
 	text-align: center;
 	padding: 1rem;
 	height: 100%;
-	\u2611\uFE0F
-	@media (min-width: ${media.netbook}px) {
+	\u2611\uFE0F @media (min-width: ${media.netbook}px) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		margin: 5vw;
@@ -100,8 +99,9 @@ const StockInput = styled.input`
 const ErrorMessageBox = styled.span`
 	background: #23d1d6;
 	border-radius: 6px;
-	padding: ${(props) => (props.visible ? '0.3rem 0.4rem' : '0')} @media
-		(max-width: ${media.phablet}px) {
+	padding: ${(props) => (props.visible ? '0.3rem 0.4rem' : '0')};
+
+	@media (max-width: ${media.phablet}px) {
 		display: block;
 	}
 `;
@@ -178,7 +178,7 @@ function Item() {
 									onChange={handleStockChange}
 									max={stockCount}
 								></StockInput>
-								<ErrorMessageBox visible={!errorMessage ? true : false}>
+								<ErrorMessageBox visible={errorMessage ? true : false}>
 									{errorMessage}
 								</ErrorMessageBox>
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
