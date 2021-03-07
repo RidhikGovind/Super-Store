@@ -20,12 +20,9 @@ const Loading = styled.div`
 `;
 
 const ProductContainer = styled.div`
-	// background: lightpink;
 	display: flex;
 	flex-direction: column;
-	// justify-content: center;
 	text-align: left;
-	// align-items: center;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	padding: 1rem;
 `;

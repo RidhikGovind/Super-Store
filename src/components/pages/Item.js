@@ -19,7 +19,7 @@ const ProductContainer = styled.div`
 	text-align: center;
 	padding: 1rem;
 	height: 100%;
-	\u2611\uFE0F @media (min-width: ${media.netbook}px) {
+	@media (min-width: ${media.netbook}px) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		margin: 5vw;
