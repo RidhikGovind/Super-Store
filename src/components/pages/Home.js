@@ -76,8 +76,6 @@ const StyledLink = styled(Link)`
 `;
 
 function Home() {
-	
-
 	const URL = 'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc';
 
 	const { products, setProducts, isLoading } = useFetch(URL);

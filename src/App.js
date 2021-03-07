@@ -5,7 +5,11 @@ import { Home, Deals, Cart, Item } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
 
-const MainContainer = styled.div``;
+const MainContainer = styled.div`
+
+height: 100%;
+min-height: 100vh;
+`;
 
 function App() {
 	return (
