@@ -1,4 +1,4 @@
-# Super-Store
+# Super-Store ![](src/assets/storeLogo.png)
 
 An E-commerce store that is being build as part of the [Guided Projects](https://guidedprojects.dev/).  
 
