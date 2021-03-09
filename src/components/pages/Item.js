@@ -184,7 +184,7 @@ function Item() {
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								<StyledLink>Add to Cart</StyledLink>
+								<StyledLink to={`item/${_id}`}>Add to Cart</StyledLink>
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>

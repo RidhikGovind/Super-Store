@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { mixins } from '../../styles';
+import SearchBar from '../SearchBar';
 
 const MainBody = styled.div``;
 
@@ -36,7 +37,7 @@ const Image = styled.img`
 
 const Name = styled.div`
 	font-size: 1.2rem;
-	margin: 0.3rem 0.5rem; 
+	margin: 0.3rem 0.5rem;
 `;
 
 const Rating = styled.div`
@@ -76,20 +77,41 @@ const StyledLink = styled(Link)`
 `;
 
 function Home() {
-	const URL = 'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc';
+	const URL = 'https://gp-super-store-api.herokuapp.com/item/list';
 
-	const { products, setProducts, isLoading } = useFetch(URL);
+	const { products, isLoading, setProducts } = useFetch(URL);
+
+	const [error, setError] = useState(false);
+
+	const handleOnSearch = (searchQuery) => {
+		fetch(URL)
+			.then((res) => res.json())
+			.then((data) => {
+				setError(false);
+
+				const filteredProducts = data.items.filter((product) => {
+					return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+				});
+				if(filteredProducts.length == 0) {
+					setError(true)
+				}
+				setProducts(filteredProducts)
+			});
+	};
+
 	return (
 		<>
 			{isLoading ? (
 				<Loading>LOADING...</Loading>
 			) : (
 				<MainBody>
+					
+					<SearchBar searchError={error} onSearch={handleOnSearch} />
 					<MainContainer>
 						{products.map(
 							({ imageUrl, name, avgRating, price, isOnSale, _id }) => (
 								<ProductContainer key={_id}>
-									<Image src={imageUrl}></Image>
+									<Image src={imageUrl} alt={name}></Image>
 									<Name>{name}</Name>
 									<Rating>
 										<Stars rating={avgRating} id={_id}></Stars>
@@ -106,6 +128,7 @@ function Home() {
 							)
 						)}
 					</MainContainer>
+					{error && ( <h1 style={{textAlign: 'center'}}>No results to display</h1>)}
 				</MainBody>
 			)}
 		</>
