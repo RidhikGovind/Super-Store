@@ -5,6 +5,7 @@ import useFetch from '../../hooks/useFetch';
 import { Link } from 'react-router-dom';
 import { mixins } from '../../styles';
 import SearchBar from '../SearchBar';
+import ReactPaginate from 'react-paginate';
 
 const MainBody = styled.div``;
 
@@ -77,11 +78,32 @@ const StyledLink = styled(Link)`
 `;
 
 function Home() {
+	
+	const maxItemsPerPage = 6;
+
 	const URL = 'https://gp-super-store-api.herokuapp.com/item/list';
 
 	const { products, isLoading, setProducts } = useFetch(URL);
 
 	const [error, setError] = useState(false);
+
+	const[currentPage,setCurrentPage] = useState(0)
+	
+	const pagesVisited = currentPage * maxItemsPerPage;
+
+	const paginatedItems = products.splice(
+		pagesVisited,
+		pagesVisited + maxItemsPerPage
+	)
+
+	const pageCount = Math.ceil(products.length / maxItemsPerPage)
+
+	const changePage = ({selected}) => {
+		setCurrentPage(selected)
+	}
+
+
+
 
 	const handleOnSearch = (searchQuery) => {
 		fetch(URL)
@@ -92,10 +114,10 @@ function Home() {
 				const filteredProducts = data.items.filter((product) => {
 					return product.name.toLowerCase().includes(searchQuery.toLowerCase());
 				});
-				if(filteredProducts.length == 0) {
-					setError(true)
+				if (filteredProducts.length == 0) {
+					setError(true);
 				}
-				setProducts(filteredProducts)
+				setProducts(filteredProducts);
 			});
 	};
 
@@ -105,10 +127,9 @@ function Home() {
 				<Loading>LOADING...</Loading>
 			) : (
 				<MainBody>
-					
 					<SearchBar searchError={error} onSearch={handleOnSearch} />
 					<MainContainer>
-						{products.map(
+						{products && paginatedItems.map(
 							({ imageUrl, name, avgRating, price, isOnSale, _id }) => (
 								<ProductContainer key={_id}>
 									<Image src={imageUrl} alt={name}></Image>
@@ -128,7 +149,17 @@ function Home() {
 							)
 						)}
 					</MainContainer>
-					{error && ( <h1 style={{textAlign: 'center'}}>No results to display</h1>)}
+					{error ? (
+						<h1 style={{ textAlign: 'center' }}>No results to display</h1>
+					) : (
+						<ReactPaginate
+							previousLabel={'prev'}
+							nextLabel={'Next'}
+							pageCount={pageCount}
+							onPageChange={changePage}
+							activeClassName={'activePage'}
+						/>
+					)}
 				</MainBody>
 			)}
 		</>
