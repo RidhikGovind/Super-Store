@@ -1,9 +1,10 @@
-import React,{useState,useEffect} from 'react';
+import {useState,useEffect} from 'react';
 
 const useFetch = (url) => {
 	const [products, setProducts] = useState([]);
 	const [singleProduct, setSingleProduct] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	
 
 	useEffect(() => {
 		fetch(url)
@@ -19,10 +20,13 @@ const useFetch = (url) => {
 				setProducts(data.items);
 				setSingleProduct(data)
                 setIsLoading(false)
+				
+				
 			})
 			.catch((err) => console.log('error fetching data', err));
 	},[]);
 
-    return {products, setProducts, isLoading, singleProduct}
+
+    return { isLoading ,products, setProducts, singleProduct}
 };
 export default useFetch;

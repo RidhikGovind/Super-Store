@@ -3,6 +3,7 @@ import starEmpty from '../assets/starEmpty.svg';
 import starFull from '../assets/starFull.svg';
 import starHalf from '../assets/starHalf.svg';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 const StarContainer = styled.div`
 	display: flex;
@@ -18,7 +19,7 @@ function Stars({ rating }) {
 
 	const StarLoop = (starName, repeatNum) => {
 		for (let i = 0; i < repeatNum; i++) {
-			arr.push(<img src={starName} style={starStyle} />);
+			arr.push(<img src={starName} key={uuidv4()} style={starStyle} />);
 		}
 
 		return arr;

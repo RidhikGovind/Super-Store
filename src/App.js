@@ -1,6 +1,6 @@
 import './styles.css';
 import { BrowserRouter as Router, Switch , Route} from 'react-router-dom';
-import { Nav, SearchBar } from './components';
+import { Nav } from './components';
 import { Home, Deals, Cart, Item } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
@@ -17,7 +17,7 @@ function App() {
 			<GlobalStyle />
 			<Router>
 				<Nav />
-				<SearchBar />
+				
 				<Switch>
 					<Route path='/' exact>
 						<Home />
