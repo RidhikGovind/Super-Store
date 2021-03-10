@@ -50,7 +50,7 @@ function SearchBar({ onSearch }) {
 
 	const handleOnChange = ({ target }) => {
 		setSearchTerm(target.value);
-		onSearch(searchTerm);
+		// onSearch(searchTerm);
 	};
 
 	const handleOnSubmit = (e) => {
@@ -66,7 +66,7 @@ function SearchBar({ onSearch }) {
 			<SearchInputForm onSubmit={handleOnSubmit}>
 				<Input value={searchTerm} onChange={handleOnChange}></Input>
 				<ResetBtn onClick={reset}>X</ResetBtn>
-				<SearchBtn type='submit' >
+				<SearchBtn type='submit'>
 					<SearchIcon src={searchIcon}></SearchIcon>
 				</SearchBtn>
 			</SearchInputForm>

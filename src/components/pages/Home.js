@@ -5,7 +5,7 @@ import useFetch from '../../hooks/useFetch';
 import { Link } from 'react-router-dom';
 import { mixins } from '../../styles';
 import SearchBar from '../SearchBar';
-import ReactPaginate from 'react-paginate';
+import Pagination from '../Pagination';
 
 const MainBody = styled.div``;
 
@@ -78,32 +78,27 @@ const StyledLink = styled(Link)`
 `;
 
 function Home() {
-	
-	const maxItemsPerPage = 6;
-
 	const URL = 'https://gp-super-store-api.herokuapp.com/item/list';
 
 	const { products, isLoading, setProducts } = useFetch(URL);
 
+	//error displayed if there are no search results
 	const [error, setError] = useState(false);
 
-	const[currentPage,setCurrentPage] = useState(0)
-	
-	const pagesVisited = currentPage * maxItemsPerPage;
+	const [currentPage, setCurrentPage] = useState(1);
+	const [productsPerPage] = useState(8);
 
-	const paginatedItems = products.splice(
-		pagesVisited,
-		pagesVisited + maxItemsPerPage
-	)
+	//get current posts
+	const indexOfLastProduct = currentPage * productsPerPage;
+	const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+	const currentProducts = products.slice(
+		indexOfFirstProduct,
+		indexOfLastProduct
+	);
 
-	const pageCount = Math.ceil(products.length / maxItemsPerPage)
-
-	const changePage = ({selected}) => {
-		setCurrentPage(selected)
+	const paginate = (number) => {
+		setCurrentPage(number)
 	}
-
-
-
 
 	const handleOnSearch = (searchQuery) => {
 		fetch(URL)
@@ -121,6 +116,10 @@ function Home() {
 			});
 	};
 
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	  }, [currentPage])
+
 	return (
 		<>
 			{isLoading ? (
@@ -129,36 +128,31 @@ function Home() {
 				<MainBody>
 					<SearchBar searchError={error} onSearch={handleOnSearch} />
 					<MainContainer>
-						{products && paginatedItems.map(
-							({ imageUrl, name, avgRating, price, isOnSale, _id }) => (
-								<ProductContainer key={_id}>
-									<Image src={imageUrl} alt={name}></Image>
-									<Name>{name}</Name>
-									<Rating>
-										<Stars rating={avgRating} id={_id}></Stars>
-										<RatingNum>{avgRating}</RatingNum>
-									</Rating>
-									<Price>
-										${price}
-										{isOnSale === true ? <OnSale>On Sale</OnSale> : ''}
-									</Price>
-									<Wrapper>
-										<StyledLink to={`/item/${_id}`}>View Item</StyledLink>
-									</Wrapper>
-								</ProductContainer>
-							)
-						)}
+						{products &&
+							currentProducts.map(
+								({ imageUrl, name, avgRating, price, isOnSale, _id }) => (
+									<ProductContainer key={_id}>
+										<Image src={imageUrl} alt={name}></Image>
+										<Name>{name}</Name>
+										<Rating>
+											<Stars rating={avgRating} id={_id}></Stars>
+											<RatingNum>{avgRating}</RatingNum>
+										</Rating>
+										<Price>
+											${price}
+											{isOnSale === true ? <OnSale>On Sale</OnSale> : ''}
+										</Price>
+										<Wrapper>
+											<StyledLink to={`/item/${_id}`}>View Item</StyledLink>
+										</Wrapper>
+									</ProductContainer>
+								)
+							)}
 					</MainContainer>
 					{error ? (
 						<h1 style={{ textAlign: 'center' }}>No results to display</h1>
 					) : (
-						<ReactPaginate
-							previousLabel={'prev'}
-							nextLabel={'Next'}
-							pageCount={pageCount}
-							onPageChange={changePage}
-							activeClassName={'activePage'}
-						/>
+						<Pagination productsPerPage={productsPerPage} totalProducts={products.length} paginate={paginate}/>
 					)}
 				</MainBody>
 			)}
