@@ -22,7 +22,7 @@ const ProductContainer = styled.div`
 	@media (min-width: ${media.netbook}px) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		margin: 5vw;
+		margin: 3vw;
 	}
 `;
 
@@ -83,7 +83,10 @@ const StyledLink = styled(Link)`
 	${mixins.yellowButton};
 `;
 
-const Quantity = styled.div``;
+const Quantity = styled.div`
+	${mixins.flexCenter}
+	flex-direction: column;
+`;
 
 const ImageGrid = styled.div``;
 
@@ -96,10 +99,13 @@ const StockInput = styled.input`
 	margin: 0.5rem;
 `;
 
-const ErrorMessageBox = styled.span`
+const ErrorMessageBox = styled.div`
 	background: #23d1d6;
 	border-radius: 6px;
 	padding: ${(props) => (props.visible ? '0.3rem 0.4rem' : '0')};
+	margin: 1rem 0;
+	width: 80%;
+
 
 	@media (max-width: ${media.phablet}px) {
 		display: block;
