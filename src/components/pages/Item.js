@@ -106,7 +106,6 @@ const ErrorMessageBox = styled.div`
 	margin: 1rem 0;
 	width: 80%;
 
-
 	@media (max-width: ${media.phablet}px) {
 		display: block;
 	}
@@ -135,24 +134,27 @@ function Item() {
 	const [stock, setStock] = useState(1);
 	const [errorMessage, setErrorMessage] = useState(null);
 
-	useEffect(() => {
-		handleAddToCart();
-	}, [stock]);
+	// useEffect(() => {
+	// 	handleAddToCart()
+	// }, [stock]);
 
 	const handleStockChange = ({ target }) => {
-		setStock(target.value);
+		// setStock(target.value);
+		const num = target.value;
+		if (num > stockCount) {
+			setErrorMessage('Aiming pretty high huh ? Not enough products.');
+		} else if (num < 0) {
+			setErrorMessage('How can you be so negative ?');
+		} else if (num == 0) {
+			setErrorMessage(`Don't be this cheap. Minimum 1 item is needed`);
+		} else {
+			setErrorMessage(null);
+			setStock(num);
+		}
 	};
 
 	const handleAddToCart = () => {
-		if (stock == 0) {
-			setErrorMessage(`Don't be this cheap. Minimum 1 item is needed`);
-		} else if (stock < 0) {
-			setErrorMessage('How can you be so negative ?');
-		} else if (stock > stockCount) {
-			setErrorMessage(`Aiming pretty high huh ? Not enough products.`);
-		} else {
-			setErrorMessage(null);
-		}
+		console.log(stock);
 	};
 
 	return (
@@ -190,7 +192,7 @@ function Item() {
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								<StyledLink to={`item/${_id}`}>Add to Cart</StyledLink>
+								<StyledLink onClick={handleAddToCart}>Add to Cart</StyledLink>
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>

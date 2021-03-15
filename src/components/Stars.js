@@ -14,6 +14,8 @@ const starStyle = {
 	height: '30px',
 };
 
+//logic for stars still pending !!
+
 function Stars({ rating }) {
 	let arr = [];
 
