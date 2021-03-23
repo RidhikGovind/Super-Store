@@ -4,7 +4,8 @@ import { Nav } from './components';
 import { Home, Deals, Cart, Item } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
-import { CartProvider } from './context/CartContext';
+
+import CartContextProvider from './context/CartContext';
 
 const MainContainer = styled.div`
 	height: 100%;
@@ -15,7 +16,7 @@ function App() {
 	return (
 		<MainContainer>
 			<GlobalStyle />
-			<CartProvider>
+			<CartContextProvider>
 				<Router>
 					<Nav />
 
@@ -34,7 +35,7 @@ function App() {
 						</Route>
 					</Switch>
 				</Router>
-			</CartProvider>
+			</CartContextProvider>
 		</MainContainer>
 	);
 }

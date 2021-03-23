@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-const NavLinkWrapper = styled.li`
+const NavLinkWrapper = styled.div`
 
 li {
     margin: 0 0.8rem;

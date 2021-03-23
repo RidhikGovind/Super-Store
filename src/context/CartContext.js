@@ -1,13 +1,34 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
+import { sumItems, CartReducer } from './CartReducer';
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
-const { Provider } = CartContext;
+//getting the storage item from localStorage, if empty then create an empty array
+const storage = localStorage.getItem('cart')
+	? JSON.parse(localStorage.getItem('cart'))
+	: [];
 
-const CartProvider = ({ children }) => {
-	const [cartItems, setCartItems] = useState([]);
-	const [cartTotal, setCartTotal] = useState(1);
-	return <Provider value={{ cartTotal }}>{children}</Provider>;
+//creating an initialState consisting of storage, quantities etc.
+const initialState = { cartItems: storage, ...sumItems(storage) };
+
+const CartContextProvider = ({ children }) => {
+	const [state, dispatch] = useReducer(CartReducer, initialState);
+
+	//here the payload is the 'singleProduct's JSON data passed from Item.js
+	const addProduct = (payload) => {
+		dispatch({ type: 'ADD_ITEM', payload });
+	};
+
+	const contextValues = {
+		addProduct,
+		...state,
+	};
+
+	return (
+		<CartContext.Provider value={contextValues}>
+			{children}
+		</CartContext.Provider>
+	);
 };
 
-export { CartProvider, CartContext };
+export default CartContextProvider;

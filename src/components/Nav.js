@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import menuIcon from '../assets/menuIcon.png';
 import closeIcon from '../assets/closeIcon.png';
@@ -99,8 +99,7 @@ const CartTotal = styled.span`
 function Nav() {
 	const [clicked, setClicked] = useState(false);
 
-	//grabbing Provider values through useContext
-	const { cartTotal } = useContext(CartContext);
+	const {itemCount} = useContext(CartContext)
 
 	const handleClick = () => {
 		setClicked(!clicked);
@@ -141,7 +140,7 @@ function Nav() {
 				<NavItem to='/'>Home</NavItem>
 				<NavItem to='/deals'>Deals</NavItem>
 				<NavItem to='/cart'>Cart</NavItem>
-				<CartTotal>{cartTotal}</CartTotal>
+				<CartTotal>{itemCount}</CartTotal>
 			</DesktopView>
 		</NavbarContainer>
 	);

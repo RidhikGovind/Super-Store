@@ -62,6 +62,7 @@ const StyledLink = styled(Link)`
 
 function ItemCard(props) {
 	const { name, imageUrl, avgRating, price, isOnSale, _id } = props;
+	
 	return (
 		<ProductContainer key={_id}>
 			<Image src={imageUrl} alt={name}></Image>

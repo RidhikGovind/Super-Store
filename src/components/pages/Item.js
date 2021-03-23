@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
 import { Link, useParams } from 'react-router-dom';
 import { mixins, media } from '../../styles';
+import { CartContext } from '../../context/CartContext';
 
 const MainContainer = styled.div``;
 
@@ -79,7 +80,7 @@ const Wrapper = styled.div`
 	${mixins.flexCenter};
 `;
 
-const StyledLink = styled(Link)`
+const Button = styled(Link)`
 	${mixins.yellowButton};
 `;
 
@@ -117,9 +118,12 @@ const StockLeft = styled.div`
 function Item() {
 	const { itemId } = useParams();
 
+	const { addProduct} = useContext(CartContext)
+
 	const URL = `https://gp-super-store-api.herokuapp.com/item/${itemId}`;
 
 	const { singleProduct, isLoading } = useFetch(URL);
+
 	const {
 		name,
 		imageUrl,
@@ -134,12 +138,7 @@ function Item() {
 	const [stock, setStock] = useState(1);
 	const [errorMessage, setErrorMessage] = useState(null);
 
-	// useEffect(() => {
-	// 	handleAddToCart()
-	// }, [stock]);
-
 	const handleStockChange = ({ target }) => {
-		// setStock(target.value);
 		const num = target.value;
 		if (num > stockCount) {
 			setErrorMessage('Aiming pretty high huh ? Not enough products.');
@@ -151,10 +150,6 @@ function Item() {
 			setErrorMessage(null);
 			setStock(num);
 		}
-	};
-
-	const handleAddToCart = () => {
-		console.log(stock);
 	};
 
 	return (
@@ -185,6 +180,7 @@ function Item() {
 									min='1'
 									onChange={handleStockChange}
 									max={stockCount}
+									value={stock}
 								></StockInput>
 								<ErrorMessageBox visible={errorMessage ? true : false}>
 									{errorMessage}
@@ -192,7 +188,15 @@ function Item() {
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								<StyledLink onClick={handleAddToCart}>Add to Cart</StyledLink>
+								{
+									<Button onClick={() => addProduct(singleProduct)}>
+										Add to cart
+									</Button>
+								}
+								{/* {
+									isInCart(product) &&
+									 <Button onClick={() => addProduct(product) }>Add to cart</Button>
+								} */}
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>
