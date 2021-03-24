@@ -87,19 +87,20 @@ const StyledLink = styled(Link)`
 `;
 
 const CartTotal = styled.span`
-	width: 20px;
-	height: 20px;
+	width: fit-content;
+	height: fit-content;
 	font-weight: bolder;
 	font-size: 1.3rem;
 	background: red;
 	border-radius: 50%;
+	padding: 0.1rem;
 	${mixins.flexCenter}
 `;
 
 function Nav() {
 	const [clicked, setClicked] = useState(false);
 
-	const {itemCount} = useContext(CartContext)
+	const { itemCount } = useContext(CartContext);
 
 	const handleClick = () => {
 		setClicked(!clicked);
