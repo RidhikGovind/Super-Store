@@ -1,7 +1,7 @@
 import './styles.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Nav } from './components';
-import { Home, Deals, Cart, Item } from './components/pages';
+import { Home, Deals, Cart, Item, Checkout } from './components/pages';
 import { GlobalStyle } from './styles';
 import styled from 'styled-components';
 
@@ -32,6 +32,9 @@ function App() {
 						</Route>
 						<Route path='/item/:itemId' exact>
 							<Item />
+						</Route>
+						<Route path='/checkout' exact>
+							<Checkout/>
 						</Route>
 					</Switch>
 				</Router>

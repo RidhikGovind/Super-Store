@@ -87,8 +87,8 @@ const StyledLink = styled(Link)`
 `;
 
 const CartTotal = styled.span`
-	width: fit-content;
-	height: fit-content;
+	width: 30px;
+	height: 30px;
 	font-weight: bolder;
 	font-size: 1.3rem;
 	background: red;

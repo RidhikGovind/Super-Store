@@ -1,19 +1,37 @@
 import { useContext } from 'react';
 import { CartContext } from '../../../context/CartContext';
 import styled from 'styled-components/macro';
-import { mixins, theme } from '../../../styles';
+import { mixins, theme, media } from '../../../styles';
+import { Link } from 'react-router-dom';
 
-const Container = styled.div``;
-const Title = styled.div``;
+const Container = styled.div`
+	margin: 0rem 10rem;
+
+	@media (max-width: ${media.netbook}px) {
+		margin: 0rem 2rem;
+	}
+	@media (max-width: ${media.phablet}px) {
+		margin: 0rem;
+	}
+`;
+const Title = styled.div`
+	font-size: 2rem;
+	margin: 1rem;
+	text-align: center;
+`;
 const CartItemsContainer = styled.div``;
 
 const CartItems = styled.div`
-	${mixins.flexBetween}
-	padding: 1.5rem 1rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 10px;
+	padding: 1rem 2rem;
 	margin: 1rem;
-	
+
+	@media (max-width: ${media.phablet}px) {
+		padding: 1rem;
+	}
 `;
 const Image = styled.img`
 	height: 90px;
@@ -21,7 +39,14 @@ const Image = styled.img`
 	object-fit: scale-down;
 `;
 const DetailsWrapper = styled.div`
-	text-align: left;
+	display: flex;
+	justify-content: start;
+	flex-direction: column;
+	flex-wrap: wrap;
+
+	@media (max-width: ${media.phablet}px) {
+		flex-direction: row;
+	}
 `;
 const Name = styled.div`
 	font-size: 1.2rem;
@@ -29,6 +54,7 @@ const Name = styled.div`
 
 const Quantity = styled.div`
 	${mixins.flexCenter}
+	flex-wrap: wrap;
 `;
 
 const Text = styled.span``;
@@ -69,14 +95,20 @@ const Remove = styled.div`
 		color: black;
 	}
 `;
+
+const PriceField = styled.div`
+	${mixins.flexCenter}
+`;
+
 const Price = styled.div`
 	font-size: 1.2rem;
 	font-weight: bolder;
-	margin-left: 1rem;
 `;
 
 const Wrapper = styled.div`
-	${mixins.flexCenter}
+	display: flex;
+	justify-content: start;
+	align-items: center;
 	margin-top: 1rem;
 `;
 
@@ -94,10 +126,23 @@ const Total = styled.div`
 	font-size: 1.5rem;
 	font-weight: bolder;
 `;
+const EmptyCartContainer = styled.div`
+	text-align: center;
+`;
+const EmptyCart = styled.div`
+	font-size: 1.4rem;
+	margin-top: 2rem;
+	font-style: italic;
+`;
+
+const BuyProducts = styled.div`
+	${mixins.yellowButton}
+`;
 
 function Cart() {
-	const { cartItems, total, increase, decrease } = useContext(CartContext);
-
+	const { cartItems, total, increase, decrease, checkout } = useContext(
+		CartContext
+	);
 
 	return (
 		<Container>
@@ -105,7 +150,7 @@ function Cart() {
 			<CartItemsContainer>
 				{cartItems.map((cartItem) => (
 					<CartItems key={cartItem._id}>
-						<Image src={cartItem.imageUrl} alt={name}></Image>
+						<Image src={cartItem.imageUrl} alt={cartItem.name}></Image>
 
 						<DetailsWrapper>
 							<Name>{cartItem.name}</Name>
@@ -113,26 +158,43 @@ function Cart() {
 								<Quantity>
 									<Text>Quantity</Text>
 									<Number>{cartItem.quantity}</Number>
+
 									<Increase onClick={() => increase(cartItem)}>+</Increase>
 									<Decrease onClick={() => decrease(cartItem)}>-</Decrease>
-								</Quantity>
 
-								<Remove>Remove</Remove>
-								<Price>${cartItem.price}</Price>
+									<Remove>Remove</Remove>
+								</Quantity>
 							</Wrapper>
 						</DetailsWrapper>
+
+						<PriceField>
+							<Price>${cartItem.price}</Price>
+						</PriceField>
 					</CartItems>
 				))}
 			</CartItemsContainer>
-			<LastContainer>
-				<Checkout>Checkout</Checkout>
-				<Total>
-					<span style={{ fontSize: '1.1rem', fontWeight: 'lighter' }}>
-						Total:
-					</span>{' '}
-					${total}
-				</Total>
-			</LastContainer>
+
+			{cartItems.length > 0 ? (
+				<LastContainer>
+					<Link to={'/checkout'}>
+						<Checkout onClick={() => checkout()}>Checkout</Checkout>
+					</Link>
+					<Total>
+						<span style={{ fontSize: '1.1rem', fontWeight: 'lighter' }}>
+							Total:
+						</span>{' '}
+						${total}
+					</Total>
+				</LastContainer>
+			) : (
+				<EmptyCartContainer>
+					<EmptyCart>Your cart is empty..</EmptyCart>
+
+					<Link to={'/'}>
+						<BuyProducts>Browse Products</BuyProducts>
+					</Link>
+				</EmptyCartContainer>
+			)}
 		</Container>
 	);
 }

@@ -9,7 +9,7 @@ const storage = localStorage.getItem('cart')
 	: [];
 
 //creating an initialState consisting of storage, quantities etc.
-const initialState = { cartItems: storage, ...sumItems(storage) };
+const initialState = { cartItems: storage, ...sumItems(storage), handleCartCheckout: false };
 
 const CartContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(CartReducer, initialState);
@@ -25,11 +25,17 @@ const CartContextProvider = ({ children }) => {
 	const decrease = (payload) => {
 		dispatch({ type: 'DECREASE', payload });
 	};
+	const checkout = (payload) => {
+		dispatch({ type: 'CHECKOUT', payload });
+	};
+
+	
 
 	const contextValues = {
 		addProduct,
 		increase,
 		decrease,
+		checkout,
 		...state,
 	};
 

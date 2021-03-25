@@ -52,6 +52,13 @@ export const CartReducer = (state, action) => {
 					...sumItems(state.cartItems),
 				};
 
+		case 'CHECKOUT': 
+				
+				return{
+					cartItems: [],
+					...sumItems([]),
+				};
+
 		default:
 			return state;
 	}
