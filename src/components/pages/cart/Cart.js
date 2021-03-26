@@ -140,7 +140,7 @@ const BuyProducts = styled.div`
 `;
 
 function Cart() {
-	const { cartItems, total, increase, decrease, checkout } = useContext(
+	const { cartItems, total, increase, decrease, checkout, remove } = useContext(
 		CartContext
 	);
 
@@ -162,7 +162,7 @@ function Cart() {
 									<Increase onClick={() => increase(cartItem)}>+</Increase>
 									<Decrease onClick={() => decrease(cartItem)}>-</Decrease>
 
-									<Remove>Remove</Remove>
+									<Remove onClick={() => remove(cartItem)}>Remove</Remove>
 								</Quantity>
 							</Wrapper>
 						</DetailsWrapper>

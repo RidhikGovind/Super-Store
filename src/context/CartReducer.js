@@ -14,7 +14,7 @@ export const sumItems = (cartItems) => {
 	let total = cartItems
 		.reduce((total, product) => total + product.price * product.quantity, 0)
 		.toFixed(2);
-	return { itemCount, total };
+	return { total, itemCount };
 };
 
 export const CartReducer = (state, action) => {
@@ -34,50 +34,60 @@ export const CartReducer = (state, action) => {
 				...sumItems(state.cartItems),
 			};
 		case 'INCREASE':
-			state.cartItems[state.cartItems.findIndex((product) => product._id === action.payload._id)].quantity++;
+			state.cartItems[
+				state.cartItems.findIndex(
+					(product) => product._id === action.payload._id
+				)
+			].quantity++;
 			return {
 				...state,
 				cartItems: [...state.cartItems],
 				...sumItems(state.cartItems),
 			};
 		case 'DECREASE':
-			
-			console.log(action.payload.quantity)
-				console.log(state.cartItems[state.cartItems.findIndex(product => product._id === action.payload._id)].quantity--)
-				// state.cartItems[state.cartItems.findIndex(product => product._id === action.payload._id)].quantity--
+			// console.log(action.payload.quantity)
+			console.log(
+				state.cartItems[
+					state.cartItems.findIndex(
+						(product) => product._id === action.payload._id
+					)
+				].quantity--
+			);
+			// state.cartItems[state.cartItems.findIndex(product => product._id === action.payload._id)].quantity--
 
-				return {
-					...state,
-					cartItems: [...state.cartItems],
-					...sumItems(state.cartItems),
-				};
+			return {
+				...state,
+				cartItems: [...state.cartItems],
+				...sumItems(state.cartItems),
+			};
 
-		case 'CHECKOUT': 
-				
-				return{
-					cartItems: [],
-					...sumItems([]),
-				};
+		case 'CHECKOUT':
+			return {
+				cartItems: [],
+				...sumItems([]),
+			};
+
+		case 'REMOVE':
+			console.log(sumItems)
+			return {
+				...state,
+				cartItems: [...state.cartItems.filter(item => item._id !== action.payload._id)],
+				...sumItems(state.cartItems.filter(item => item._id !== action.payload._id)),
+			};
 
 		default:
 			return state;
 	}
 };
 
-
-
-
-
-
 // extra code: *********
 
-
 // if (
-			// 	state.cartItems.map((item) => {
-			// 		if (item._id === action.payload._id) {
-			// 			console.log(item.quantity)
-			// 			item.quantity = item.quantity - 1
-			// 			console.log(item.quantity)
-			// 		}
-			// 	})
-			// )
+// 	state.cartItems.map((item) => {
+// 		if (item._id === action.payload._id) {
+// 			console.log(item.quantity)
+// 			item.quantity = item.quantity - 1
+// 			console.log(item.quantity)
+// 		}
+// 	})
+// )

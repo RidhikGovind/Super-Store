@@ -28,12 +28,18 @@ const CartContextProvider = ({ children }) => {
 	const checkout = (payload) => {
 		dispatch({ type: 'CHECKOUT', payload });
 	};
+	const remove = (payload) => {
+		dispatch({ type: 'REMOVE', payload });
+	};
+
+
 
 	const contextValues = {
 		addProduct,
 		increase,
 		decrease,
 		checkout,
+		remove,
 		...state,
 	};
 
