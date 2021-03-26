@@ -3,6 +3,7 @@ import { CartContext } from '../../../context/CartContext';
 import styled from 'styled-components/macro';
 import { mixins, theme, media } from '../../../styles';
 import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Container = styled.div`
 	margin: 0rem 10rem;
@@ -144,8 +145,16 @@ function Cart() {
 		CartContext
 	);
 
+	const sucessNotify = (itemName) =>
+		toast(` ${itemName} removed from cart`, {
+			icon: '\u{1F4E6}',
+		});
+
 	return (
 		<Container>
+			<div>
+				<Toaster />
+			</div>
 			<Title>Shopping Cart</Title>
 			<CartItemsContainer>
 				{cartItems.map((cartItem) => (
@@ -162,7 +171,14 @@ function Cart() {
 									<Increase onClick={() => increase(cartItem)}>+</Increase>
 									<Decrease onClick={() => decrease(cartItem)}>-</Decrease>
 
-									<Remove onClick={() => remove(cartItem)}>Remove</Remove>
+									<Remove
+										onClick={() => {
+											sucessNotify(cartItem.name);
+											remove(cartItem);
+										}}
+									>
+										Remove
+									</Remove>
 								</Quantity>
 							</Wrapper>
 						</DetailsWrapper>

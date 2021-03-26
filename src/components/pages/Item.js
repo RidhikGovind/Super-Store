@@ -5,6 +5,7 @@ import useFetch from '../../hooks/useFetch';
 import { Link, useParams } from 'react-router-dom';
 import { mixins, media } from '../../styles';
 import { CartContext } from '../../context/CartContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 const MainContainer = styled.div``;
 
@@ -143,7 +144,7 @@ function Item() {
 
 	const isItemInCart = (singleProduct) => {
 		// console.log(!!cartItems.find((item) => item._id === _id))
-		console.log(cartItems)
+		console.log(cartItems);
 		return !cartItems.find((item) => item._id === _id);
 	};
 
@@ -161,12 +162,24 @@ function Item() {
 		}
 	};
 
+	const addItemToCart = () => {
+		toast.success(` Item successfully added to cart`);
+	};
+	const addMoreItemToCart = () => {
+		toast(` Added one more item to cart`, {
+			icon: '\u2B06\uFE0F',
+		});
+	};
+
 	return (
 		<>
 			{isLoading ? (
 				<Loading>LOADING...</Loading>
 			) : (
 				<MainContainer>
+					<div>
+						<Toaster />
+					</div>
 					<ProductContainer>
 						<ImageGrid>
 							<Image src={imageUrl}></Image>
@@ -195,7 +208,7 @@ function Item() {
 									{errorMessage}
 								</ErrorMessageBox>
 								<AddedToCartMessage>
-									Item has been added to Cart 
+									Item has been added to Cart
 								</AddedToCartMessage>
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
@@ -203,6 +216,7 @@ function Item() {
 								{!isItemInCart(singleProduct) && (
 									<Button
 										onClick={() => {
+											addMoreItemToCart();
 											increase(singleProduct);
 										}}
 									>
@@ -212,6 +226,7 @@ function Item() {
 								{isItemInCart(singleProduct) && (
 									<Button
 										onClick={() => {
+											addItemToCart();
 											addProduct(singleProduct);
 										}}
 									>
