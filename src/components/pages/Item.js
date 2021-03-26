@@ -115,10 +115,13 @@ const StockLeft = styled.div`
 	font-size: 1.1rem;
 	font-weight: bolder;
 `;
+
+const AddedToCartMessage = styled.div``;
+
 function Item() {
 	const { itemId } = useParams();
 
-	const { addProduct} = useContext(CartContext)
+	const { addProduct, cartItems, increase } = useContext(CartContext);
 
 	const URL = `https://gp-super-store-api.herokuapp.com/item/${itemId}`;
 
@@ -137,6 +140,12 @@ function Item() {
 
 	const [stock, setStock] = useState(1);
 	const [errorMessage, setErrorMessage] = useState(null);
+
+	const isItemInCart = (singleProduct) => {
+		// console.log(!!cartItems.find((item) => item._id === _id))
+
+		return !cartItems.find((item) => item._id === _id);
+	};
 
 	const handleStockChange = ({ target }) => {
 		const num = target.value;
@@ -185,18 +194,30 @@ function Item() {
 								<ErrorMessageBox visible={errorMessage ? true : false}>
 									{errorMessage}
 								</ErrorMessageBox>
+								<AddedToCartMessage>
+									Item has been added to Cart
+								</AddedToCartMessage>
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								{
-									<Button onClick={() => addProduct(singleProduct)}>
+								{!isItemInCart(singleProduct) && (
+									<Button
+										onClick={() => {
+											increase(singleProduct);
+										}}
+									>
+										Add More
+									</Button>
+								)}
+								{isItemInCart(singleProduct) && (
+									<Button
+										onClick={() => {
+											addProduct(singleProduct);
+										}}
+									>
 										Add to cart
 									</Button>
-								}
-								{/* {
-									isInCart(product) &&
-									 <Button onClick={() => addProduct(product) }>Add to cart</Button>
-								} */}
+								)}
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>

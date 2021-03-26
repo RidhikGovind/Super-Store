@@ -24,7 +24,7 @@ function Deals() {
 	const URL =
 		'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc&isOnSale=true';
 
-	const { products, setProducts, isLoading } = useFetch(URL);
+	const { products, isLoading } = useFetch(URL);
 	return (
 		<>
 			{isLoading ? (
