@@ -117,8 +117,6 @@ const StockLeft = styled.div`
 	font-weight: bolder;
 `;
 
-const AddedToCartMessage = styled.div``;
-
 function Item() {
 	const { itemId } = useParams();
 
@@ -144,7 +142,7 @@ function Item() {
 
 	const isItemInCart = (singleProduct) => {
 		// console.log(!!cartItems.find((item) => item._id === _id))
-		console.log(cartItems);
+		// console.log(cartItems);
 		return !cartItems.find((item) => item._id === _id);
 	};
 
@@ -207,9 +205,6 @@ function Item() {
 								<ErrorMessageBox visible={errorMessage ? true : false}>
 									{errorMessage}
 								</ErrorMessageBox>
-								<AddedToCartMessage>
-									Item has been added to Cart
-								</AddedToCartMessage>
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>

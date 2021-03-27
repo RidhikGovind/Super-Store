@@ -34,26 +34,27 @@ export const CartReducer = (state, action) => {
 				...sumItems(state.cartItems),
 			};
 		case 'INCREASE':
-			state.cartItems[
-				state.cartItems.findIndex(
-					(product) => product._id === action.payload._id
-				)
-			].quantity++;
+			if (action.payload.quantity < action.payload.stockCount) {
+				state.cartItems[
+					state.cartItems.findIndex(
+						(product) => product._id === action.payload._id
+					)
+				].quantity++;
+			}
+
 			return {
 				...state,
 				cartItems: [...state.cartItems],
 				...sumItems(state.cartItems),
 			};
 		case 'DECREASE':
-			// console.log(action.payload.quantity)
-			console.log(
+			if (action.payload.quantity !== 1) {
 				state.cartItems[
 					state.cartItems.findIndex(
 						(product) => product._id === action.payload._id
 					)
-				].quantity--
-			);
-			// state.cartItems[state.cartItems.findIndex(product => product._id === action.payload._id)].quantity--
+				].quantity--;
+			}
 
 			return {
 				...state,
@@ -68,11 +69,14 @@ export const CartReducer = (state, action) => {
 			};
 
 		case 'REMOVE':
-			console.log(sumItems)
 			return {
 				...state,
-				cartItems: [...state.cartItems.filter(item => item._id !== action.payload._id)],
-				...sumItems(state.cartItems.filter(item => item._id !== action.payload._id)),
+				cartItems: [
+					...state.cartItems.filter((item) => item._id !== action.payload._id),
+				],
+				...sumItems(
+					state.cartItems.filter((item) => item._id !== action.payload._id)
+				),
 			};
 
 		default:

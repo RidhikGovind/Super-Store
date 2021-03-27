@@ -1,8 +1,6 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
 import styled from 'styled-components';
-import Stars from '../Stars';
-import { Link, NavLink } from 'react-router-dom';
 import ItemCard from './../ItemCard';
 
 const MainBody = styled.div``;
