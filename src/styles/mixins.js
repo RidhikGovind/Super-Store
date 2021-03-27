@@ -22,6 +22,9 @@ const mixins = {
 		padding: 0.4rem 0.5rem;
 		border-radius: 5px;
 		margin: 1.5rem 0;
+		&:hover {
+			background: #ffbb00;
+		}
 	`,
 };
 

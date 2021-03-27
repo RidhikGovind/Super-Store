@@ -1,8 +1,6 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
 import styled from 'styled-components';
-import Stars from '../Stars';
-import { Link, NavLink } from 'react-router-dom';
 import ItemCard from './../ItemCard';
 
 const MainBody = styled.div``;
@@ -24,7 +22,7 @@ function Deals() {
 	const URL =
 		'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc&isOnSale=true';
 
-	const { products, setProducts, isLoading } = useFetch(URL);
+	const { products, isLoading } = useFetch(URL);
 	return (
 		<>
 			{isLoading ? (
