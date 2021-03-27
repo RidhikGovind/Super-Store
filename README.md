@@ -3,6 +3,8 @@
 
 An E-commerce store that is being build as part of the [Guided Projects](https://guidedprojects.dev/).  
 
+## View the live demo here: https://sw78r.csb.app/
+
 Goal: Learn to build to project in a work-like environment where **User Stories** will be provided as guides and will be built in different phases.
 
 Tags: *#User Stories* *#Not a tutorial*  
