@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components/macro';
 import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
 import { Link, useParams } from 'react-router-dom';
 import { mixins, media } from '../../styles';
+import { CartContext } from '../../context/CartContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 const MainContainer = styled.div``;
 
@@ -22,7 +24,7 @@ const ProductContainer = styled.div`
 	@media (min-width: ${media.netbook}px) {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		margin: 5vw;
+		margin: 3vw;
 	}
 `;
 
@@ -79,11 +81,14 @@ const Wrapper = styled.div`
 	${mixins.flexCenter};
 `;
 
-const StyledLink = styled(Link)`
+const Button = styled(Link)`
 	${mixins.yellowButton};
 `;
 
-const Quantity = styled.div``;
+const Quantity = styled.div`
+	${mixins.flexCenter}
+	flex-direction: column;
+`;
 
 const ImageGrid = styled.div``;
 
@@ -96,10 +101,12 @@ const StockInput = styled.input`
 	margin: 0.5rem;
 `;
 
-const ErrorMessageBox = styled.span`
+const ErrorMessageBox = styled.div`
 	background: #23d1d6;
 	border-radius: 6px;
 	padding: ${(props) => (props.visible ? '0.3rem 0.4rem' : '0')};
+	margin: 1rem 0;
+	width: 80%;
 
 	@media (max-width: ${media.phablet}px) {
 		display: block;
@@ -109,12 +116,16 @@ const StockLeft = styled.div`
 	font-size: 1.1rem;
 	font-weight: bolder;
 `;
+
 function Item() {
 	const { itemId } = useParams();
+
+	const { addProduct, cartItems, increase } = useContext(CartContext);
 
 	const URL = `https://gp-super-store-api.herokuapp.com/item/${itemId}`;
 
 	const { singleProduct, isLoading } = useFetch(URL);
+
 	const {
 		name,
 		imageUrl,
@@ -129,24 +140,33 @@ function Item() {
 	const [stock, setStock] = useState(1);
 	const [errorMessage, setErrorMessage] = useState(null);
 
-	useEffect(() => {
-		handleAddToCart();
-	}, [stock]);
-
-	const handleStockChange = ({ target }) => {
-		setStock(target.value);
+	const isItemInCart = (singleProduct) => {
+		// console.log(!!cartItems.find((item) => item._id === _id))
+		// console.log(cartItems);
+		return !cartItems.find((item) => item._id === _id);
 	};
 
-	const handleAddToCart = () => {
-		if (stock == 0) {
-			setErrorMessage(`Don't be this cheap. Minimum 1 item is needed`);
-		} else if (stock < 0) {
+	const handleStockChange = ({ target }) => {
+		const num = target.value;
+		if (num > stockCount) {
+			setErrorMessage('Aiming pretty high huh ? Not enough products.');
+		} else if (num < 0) {
 			setErrorMessage('How can you be so negative ?');
-		} else if (stock > stockCount) {
-			setErrorMessage(`Aiming pretty high huh ? Not enough products.`);
+		} else if (num == 0) {
+			setErrorMessage(`Don't be this cheap. Minimum 1 item is needed`);
 		} else {
 			setErrorMessage(null);
+			setStock(num);
 		}
+	};
+
+	const addItemToCart = () => {
+		toast.success(` Item successfully added to cart`);
+	};
+	const addMoreItemToCart = () => {
+		toast(` Added one more item to cart`, {
+			icon: '\u2B06\uFE0F',
+		});
 	};
 
 	return (
@@ -155,6 +175,9 @@ function Item() {
 				<Loading>LOADING...</Loading>
 			) : (
 				<MainContainer>
+					<div>
+						<Toaster />
+					</div>
 					<ProductContainer>
 						<ImageGrid>
 							<Image src={imageUrl}></Image>
@@ -177,6 +200,7 @@ function Item() {
 									min='1'
 									onChange={handleStockChange}
 									max={stockCount}
+									value={stock}
 								></StockInput>
 								<ErrorMessageBox visible={errorMessage ? true : false}>
 									{errorMessage}
@@ -184,7 +208,26 @@ function Item() {
 								<StockLeft>Remaining Stock: {stockCount}</StockLeft>
 							</Quantity>
 							<Wrapper>
-								<StyledLink to={`item/${_id}`}>Add to Cart</StyledLink>
+								{!isItemInCart(singleProduct) && (
+									<Button
+										onClick={() => {
+											addMoreItemToCart();
+											increase(singleProduct);
+										}}
+									>
+										Add More
+									</Button>
+								)}
+								{isItemInCart(singleProduct) && (
+									<Button
+										onClick={() => {
+											addItemToCart();
+											addProduct(singleProduct);
+										}}
+									>
+										Add to cart
+									</Button>
+								)}
 							</Wrapper>
 						</DetailsGrid>
 					</ProductContainer>

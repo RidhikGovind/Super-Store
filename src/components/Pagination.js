@@ -19,7 +19,7 @@ const Listed = styled.li`
 	cursor: pointer;
 
 	&:hover {
-		background: #D9D9D9;
+		background: #d9d9d9;
 	}
 `;
 

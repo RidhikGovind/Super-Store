@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import menuIcon from '../assets/menuIcon.png';
 import closeIcon from '../assets/closeIcon.png';
 import { menuItems } from '../utils/menuItems';
-import { media, theme } from '../styles';
+import { media, theme, mixins } from '../styles';
+import NavItem from './NavItem';
+import { CartContext } from '../context/CartContext';
 
 const NavbarContainer = styled.div`
 	display: flex;
@@ -24,7 +26,7 @@ const MobileView = styled.div`
 `;
 
 const DesktopView = styled.div`
-	display: block;
+	display: flex;
 
 	@media (max-width: ${media.tablet}px) {
 		display: none;
@@ -47,11 +49,6 @@ const NavlinksListed = styled.li`
 	font-weight: 500;
 	display: flex;
 	justify-content: center;
-
-	// .selected{
-	//   border-bottom: 1.5px solid white;
-	//   color: #e1e1e1;
-	// }
 `;
 
 const SideMenu = styled.div``;
@@ -89,41 +86,28 @@ const StyledLink = styled(Link)`
 
 `;
 
-const Navlinknew = styled.ul`
-	li {
-		margin: 0 0.8rem;
-		text-decoration: none;
-		font-size: 1.3rem;
-		position: relative;
-	}
-
-	.current {
-		li::after {
-			content: '';
-			position: absolute;
-			width: 8px;
-			height: 8px;
-			bottom: -9px;
-			left: 50%;
-			background: white;
-			border-radius: 50%;
-		}
-
-		li {
-			color: #d3d3d3;
-		}
-	}
+const CartTotal = styled.span`
+	width: 30px;
+	height: 30px;
+	font-weight: bolder;
+	font-size: 1.3rem;
+	background: red;
+	border-radius: 50%;
+	padding: 0.1rem;
+	${mixins.flexCenter}
 `;
 
 function Nav() {
 	const [clicked, setClicked] = useState(false);
+
+	const { itemCount } = useContext(CartContext);
 
 	const handleClick = () => {
 		setClicked(!clicked);
 	};
 	return (
 		<NavbarContainer>
-			<StyledLink to='/' brand="true">
+			<StyledLink to='/' brand='true'>
 				Super Store
 			</StyledLink>
 			<MobileView>
@@ -154,13 +138,10 @@ function Nav() {
 			</MobileView>
 
 			<DesktopView>
-				<Navlinknew>
-					{menuItems.map((item) => (
-						<NavLink exact to={item.path} activeClassName='current' key={item.id} >
-							<li>{item.title}</li>
-						</NavLink>
-					))}
-				</Navlinknew>
+				<NavItem to='/'>Home</NavItem>
+				<NavItem to='/deals'>Deals</NavItem>
+				<NavItem to='/cart'>Cart</NavItem>
+				<CartTotal>{itemCount}</CartTotal>
 			</DesktopView>
 		</NavbarContainer>
 	);

@@ -1,8 +1,7 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
 import styled from 'styled-components';
-import Stars from '../Stars';
-import { Link, NavLink } from 'react-router-dom';
+import ItemCard from './../ItemCard';
 
 const MainBody = styled.div``;
 
@@ -19,74 +18,11 @@ const Loading = styled.div`
 	font-size: 2rem;
 `;
 
-const ProductContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	text-align: left;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	padding: 1rem;
-`;
-
-const Image = styled.img`
-	width: 300px;
-	height: 300px;
-	padding: 1rem;
-`;
-
-const Name = styled.div`
-	font-size: 1.2rem;
-	margin: 0.3rem 0.5rem;
-`;
-
-const Rating = styled.div`
-	display: flex;
-	align-content: center;
-	text-align: center;
-	margin: 0.3rem 0.5rem;
-`;
-
-const RatingNum = styled.div`
-	margin: 0.5rem;
-	font-size: 1.1rem;
-`;
-
-const Price = styled.div`
-	margin: 0.3rem 0.5rem;
-	font-size: 1.3rem;
-	font-weight: bold;
-`;
-
-const OnSale = styled.span`
-	height: 1rem;
-	width: 2rem;
-	background: #d22b2b;
-	color: white;
-	padding: 0.2rem 0.2rem;
-	margin-left: 0.5rem;
-	border-radius: 3px;
-`;
-
-const Wrapper = styled.div`
-	display: flex;
-	align-content: center;
-	justify-content: center;
-`;
-
-const StyledLink = styled(Link)`
-	background: #ffa200;
-	color: white;
-	font-size: 1.2rem;
-	border: none;
-	cursor: pointer;
-	padding: 0.4rem 0.5rem;
-	border-radius: 5px;
-	margin: 1.5rem 0;
-`;
-
 function Deals() {
-	const URL = 'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc';
+	const URL =
+		'https://gp-super-store-api.herokuapp.com/item/list?sortDir=asc&isOnSale=true';
 
-	const { products, setProducts, isLoading } = useFetch(URL);
+	const { products, isLoading } = useFetch(URL);
 	return (
 		<>
 			{isLoading ? (
@@ -94,25 +30,10 @@ function Deals() {
 			) : (
 				<MainBody>
 					<MainContainer>
-						{products
-							.filter((product) => product.isOnSale === true)
-							.map(({ imageUrl, name, avgRating, price, isOnSale, _id }) => (
-								<ProductContainer key={_id}>
-									<Image src={imageUrl}></Image>
-									<Name>{name}</Name>
-									<Rating>
-										<Stars rating={avgRating} id={_id}></Stars>
-										<RatingNum>{avgRating}</RatingNum>
-									</Rating>
-									<Price>
-										${price}
-										{isOnSale === true ? <OnSale>On Sale</OnSale> : ''}
-									</Price>
-									<Wrapper>
-										<StyledLink to={`/item/${_id}`}>View Item</StyledLink>
-									</Wrapper>
-								</ProductContainer>
-							))}
+						{products.map((data) => (
+							//Note-1 (see below)
+							<ItemCard {...data} />
+						))}
 					</MainContainer>
 				</MainBody>
 			)}
@@ -121,3 +42,24 @@ function Deals() {
 }
 
 export default Deals;
+
+/* Note-1 - Here instead of extracting each object and passing it as props, something like this:
+
+	DONT DO THIS !!!!!!!!
+	```
+	{products.map((imageUrl, name, avgRating, price, isOnSale, _id) => (
+		<ItemCard name={name} imageUrl={imageUrl} and so on... />
+	))}
+	```
+
+	WE CAN DO THIS: ->>>>>>>
+
+	```
+		{products.map((data) => (
+			<ItemCard {...data} /> OR <ItemCard props={data} />
+		))}	
+	```  
+
+	Then in ItemCard.js, destructure the prop passed to it.
+
+*/
