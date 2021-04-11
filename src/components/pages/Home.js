@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import Stars from '../Stars';
 import useFetch from '../../hooks/useFetch';
-import { Link } from 'react-router-dom';
-import { mixins } from '../../styles';
 import SearchBar from '../SearchBar';
 import Pagination from '../Pagination';
 import ItemCard from './../ItemCard';
